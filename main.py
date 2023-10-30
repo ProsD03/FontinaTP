@@ -1,10 +1,12 @@
 from rich.console import Console
 from rich.prompt import Prompt
 from libs.styles import info, warning, error, critical, success, default
+from libs.protocol import FontinaFactory
+from twisted.internet import reactor
 
 
 def mainLoop():
-  console.clear(4)
+  console.clear()
   console.print("🧀 FontinaTP v0.0.1 by ProsD\n", justify="center", style="bold")
   console.rule("[bold]Main Menu", style="gold3")
   console.print("1. Upload a File")
@@ -14,7 +16,8 @@ def mainLoop():
   choice = Prompt.ask("Select an option", choices=["1", "2", "3", "4"], default="1")
   match choice:
     case "1":
-     pass
+      reactor.connectTCP("localhost", 8007, FontinaFactory())
+      reactor.run()
     case "2":
       pass
     case "3":
